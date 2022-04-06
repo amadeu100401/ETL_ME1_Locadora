@@ -1,6 +1,5 @@
 class FT_locacoes(): 
     def __init__(self, id_socio,id_titulo,id_art,id_grav,id_tempo,valor_arrecadado,tempo_devolucao,multa_atraso) -> None:
-        super().__init__()
         self.id_socio = id_socio
         self.id_titulo = id_titulo
         self.id_art = id_art

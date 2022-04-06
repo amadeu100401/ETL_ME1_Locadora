@@ -1,6 +1,5 @@
 class DM_tempo():
     def __init__(self,id_tempo,nu_ano,nu_mes,nu_anomes,sg_mes,nm_mesano,nm_mes,nu_dia,dt_tempo,nu_hora,turno) -> None:
-        super().__init__()
         self.id_tempo = id_tempo
         self.nu_ano = nu_ano
         self.nu_mes = nu_mes

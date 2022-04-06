@@ -450,15 +450,20 @@ def TransformarTitutlo():
 def TransformarFMLocacoes():
     locFT = []
     count = 0
+    sum = 0
     print("Iniciando processa de transformação das Locações")
     start = timeit.default_timer()
     locs = ExtrairLocacoes()
     itLocs = ExtrairItensLocacoes()
-        
-    for locacao in locs:
-        count+=1
-        for item in itLocs:
-            locFT.append(ftLocacoes.FT_locacoes(locacao.cod_soc,item.cod_tit,IdArt(item.cod_tit),IdGrav(item.cod_tit),count,ValAr(locacao),0 if locacao.sta_pgto == "P" else (CalDt(locacao)),0.0 if locacao.sta_pgto == "P" else (CalcularMul(locacao))))
+    
+    while(count != 300):
+        for locacao in locs:
+            sum += locacao.val_loc
+            for item in itLocs:
+                count+=1
+                locFT.append(ftLocacoes.FT_locacoes(locacao.cod_soc,item.cod_tit,IdArt(item.cod_tit),IdGrav(item.cod_tit),count,sum,0 if locacao.sta_pgto == "P" else (CalDt(locacao)),0.0 if locacao.sta_pgto == "P" else (CalcularMul(locacao))))
+                print("Item adicionado")
+                print(count)
        
 
     for a in locFT: 
@@ -480,21 +485,23 @@ def CalDt(locacao):
     
 
 def IdArt(id):
-    tit = tit = ExtrairTitulos()
+    tit = ExtrairTitulos()
     for i in tit:
         if(id == i.cod_art):
             id = i.cod_art
             
             return id
-        
+
+    
 def IdGrav(id):
-    tit = tit = ExtrairTitulos()
+    tit = ExtrairTitulos()
     for i in tit:
         if(id == i.cod_grav):
             id = i.cod_grav
             
             return id
 
+"""
 def ValAr(locacao):
     vl = 0
     locs = ExtrairLocacoes()
@@ -502,6 +509,7 @@ def ValAr(locacao):
         vl += i.val_loc
         
     return vl
+"""
 
 def CalcularMul(locacao):
     multa = 0

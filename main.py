@@ -288,27 +288,13 @@ def ExtrairTempo():
     print(f"Tempo total da execução: {r} segundos")
     
     return temp1
+################## TRANSFORMAÇÃO ##################
 
-""" TESTES
-def Extracao():
-    print("Iniciando processos de extrações.")
-    ExtractArtista()
-    ExtrairCopias()
-    ExtrairGravadoras()
-    ExtrairItensLocacoes()
-    ExtrairLocacoes()
-    ExtrairSocios()
-    ExtrairTipoSocios()
-    ExtrairTitulos()
-    print("Finalizados processos de extração")
-"""
-################## EXTRAIR ##################
-
-def TransformarArtistas():
+def TransformarArtistas(artista):
     artisdw = []
-    print("Iniciando processa de transformação de Artistas")
+    print("Iniciando processo de transformação de Artistas")
     start = timeit.default_timer()
-    artista = ExtractArtista()
+    artista 
         
     for i in artista:
        artisdw.append(dmArtistas.DM_artistas(i.cod_art,i.nac_bras,i.nom_art,i.tpo_art))
@@ -323,11 +309,10 @@ def TransformarArtistas():
     
     return artisdw
 
-def TransformarGravadoras():
+def TransformarGravadoras(gravadora):
     gravdw = []
-    print("Iniciando processa de transformação de Gravadoras")
+    print("Iniciando processo de transformação de Gravadoras")
     start = timeit.default_timer()
-    gravadora = ExtrairGravadoras()
         
     for i in gravadora:
        gravdw.append(dmGravadora.DM_gravadora(i.cod_grav,i.uf_grav,i.nac_bras,i.nom_grav))
@@ -342,13 +327,13 @@ def TransformarGravadoras():
     
     return gravdw   
     
-def TransformarSocio():
+def TransformarSocio(socio):
     socdw = []
-    print("Iniciando processa de transformação de Socios")
+    print("Iniciando processo de transformação de Socios")
     start = timeit.default_timer()
-    gravadora = ExtrairSocios()
+    socio 
         
-    for i in gravadora:
+    for i in socio:
        socdw.append(dmSocio.DM_socio(i.cod_soc,i.nom_soc,i.cod_tps))
     
     #for a in socdw: - TESTES
@@ -361,12 +346,12 @@ def TransformarSocio():
     
     return socdw
 
-def TransformarTempo():
+def TransformarTempo(temp):
     count = 0
     tempdw = []
-    print("Iniciando processa de transformação do Tempo")
+    print("Iniciando processo de transformação do Tempo")
     start = timeit.default_timer()
-    temp = ExtrairTempo()
+    temp 
         
     for i in temp:
        count+=1
@@ -425,11 +410,11 @@ def NomMes(num):
     
     return nome
 
-def TransformarTitutlo():
+def TransformarTitutlo(tit):
     titdw = []
-    print("Iniciando processa de transformação dos Titulos")
+    print("Iniciando processo de transformação dos Titulos")
     start = timeit.default_timer()
-    tit = ExtrairTitulos()
+    tit 
         
     for i in tit:
        titdw.append(dmTitulo.DM_titulo(i.cod_tit,i.tpo_tit,i.cla_tit,i.dsc_tit))
@@ -447,27 +432,26 @@ def TransformarTitutlo():
 
     return titdw
 
-def TransformarFMLocacoes():
+def TransformarFMLocacoes(locs,itLocs,tit):
     locFT = []
     count = 0
     sum = 0
-    print("Iniciando processa de transformação das Locações")
+    print("Iniciando processo de transformação das Locações")
     start = timeit.default_timer()
-    locs = ExtrairLocacoes()
-    itLocs = ExtrairItensLocacoes()
-    
-    while(count != 300):
-        for locacao in locs:
-            sum += locacao.val_loc
-            for item in itLocs:
-                count+=1
-                locFT.append(ftLocacoes.FT_locacoes(locacao.cod_soc,item.cod_tit,IdArt(item.cod_tit),IdGrav(item.cod_tit),count,sum,0 if locacao.sta_pgto == "P" else (CalDt(locacao)),0.0 if locacao.sta_pgto == "P" else (CalcularMul(locacao))))
-                print("Item adicionado")
-                print(count)
+
+    for locacao in locs:
+        sum += locacao.val_loc
+        for item in itLocs:
+            count+=1
+            for titulo in tit:
+                if (item.cod_tit == titulo.cod_tit):
+                    idArt = titulo.cod_art
+                    idGrav = titulo.cod_grav
+            locFT.append(ftLocacoes.FT_locacoes(locacao.cod_soc,item.cod_tit,idArt,idGrav,count,sum,0 if locacao.sta_pgto == "P" else (CalDt(locacao)),0.0 if locacao.sta_pgto == "P" else (CalcularMul(locacao))))
        
 
-    for a in locFT: 
-        print(a.id_art)
+    # for a in locFT: 
+    #     print(a.id_art)
 
     #for a in locFT: 
     #  print(a.sg_mes)
@@ -480,26 +464,27 @@ def TransformarFMLocacoes():
     return locFT
 
 def CalDt(locacao):
-    tempoAtraso = date.today()-locacao.dat_vencstrftime("%Y", "%m", "%d")
+    diaAtual = date.today()
+    tempoAtraso = locacao.dat_venc
     return tempoAtraso
     
 
-def IdArt(id):
-    tit = ExtrairTitulos()
-    for i in tit:
-        if(id == i.cod_art):
-            id = i.cod_art
+# def IdArt(id):
+#     tit = ExtrairTitulos()
+#     for i in tit:
+#         if(id == i.cod_art):
+#             id = i.cod_art
             
-            return id
+#             return id
 
     
-def IdGrav(id):
-    tit = ExtrairTitulos()
-    for i in tit:
-        if(id == i.cod_grav):
-            id = i.cod_grav
+# def IdGrav(id):
+#     tit = ExtrairTitulos()
+#     for i in tit:
+#         if(id == i.cod_grav):
+#             id = i.cod_grav
             
-            return id
+#             return id
 
 """
 def ValAr(locacao):
@@ -513,19 +498,18 @@ def ValAr(locacao):
 
 def CalcularMul(locacao):
     multa = 0
-    tempoAtraso = date.today()-locacao.dat_vencstrftime("%d","%m","%Y")
+    tempoAtraso = int(locacao.dat_venc.strftime("%d"))
     if(tempoAtraso > 1):
         tempoAtraso -= 1
-        multa += tempoAtraso * 0.4
-        print(multa)
+        multa += 1 * 0.4
     return multa
     
 ################## CARREGAR ##################
 
-def CarregarDmArtistas():
-    print("Iniciando processa de Carregamento dos Artistas")
+def CarregarDmArtistas(arts):
+    print("Iniciando processo de Carregamento dos Artistas")
     start = timeit.default_timer()
-    arts = TransformarArtistas()
+    arts
         
     for item in arts :
         ins = dm_artista.insert().values(id_art = item.id_art, tpo_art = item.tpo_art, nac_bras = item.nac_bras, nom_art = item.nom_art)
@@ -538,42 +522,37 @@ def CarregarDmArtistas():
     print("Finalizado processo de Carregamento dos Artistas. "
           f"- Tempo de transformação: {r} segundos")
 
-def CarregarDmGravadora():
-    print("Iniciando processa de Carregamento das Gravadoras")
+def CarregarDmGravadora(gravs):
+    print("Iniciando processo de Carregamento das Gravadoras")
     start = timeit.default_timer()
-    gravs = TransformarGravadoras()
+    gravs 
         
     for item in gravs :
         ins = dm_gravadora.insert().values(id_grav = item.id_grav, uf_grav = item.uf_grav, nac_bras = item.nac_bras, nom_grav = item.nom_grav)
         result = engine.execute(ins)
         
-
-        
     end = timeit.default_timer()
     r = (end - start)
     print("Finalizado processo de Carregamento das Gravadoras. "
           f"- Tempo de transformação: {r} segundos")
 
-def CarregarDmSocio():
-    print("Iniciando processa de Carregamento dos Socios")
+def CarregarDmSocio(soc):
+    print("Iniciando processo de Carregamento dos Socios")
     start = timeit.default_timer()
-    soc = TransformarSocio()
+    soc
         
     for item in soc :
         ins = dm_socio.insert().values(id_soc = item.id_soc, nom_soc = item.nom_soc, tipo_socio = item.tipo_socio)
         result = engine.execute(ins)
         
-
-        
     end = timeit.default_timer()
     r = (end - start)
     print("Finalizado processo de Carregamento das Gravadoras. "
           f"- Tempo de transformação: {r} segundos")
 
-def CarregarDmTempo():
-    print("Iniciando processa de Carregamento do Tempo")
+def CarregarDmTempo(temp):
+    print("Iniciando processo de Carregamento do Tempo")
     start = timeit.default_timer()
-    temp = TransformarTempo()
         
     for item in temp :
         ins = dm_tempo.insert().values(id_tempo = item.id_tempo,nu_ano = item.nu_ano,nu_mes = item.nu_mes,nu_anomes = item.nu_anomes,sg_mes = item.sg_mes,nm_mesano = item.nm_mesano,nm_mes = item.nm_mes,nu_dia = item.nu_dia,dt_tempo = item.dt_tempo,nu_hora = item.nu_hora,turno = item.turno)
@@ -585,10 +564,10 @@ def CarregarDmTempo():
     print("Finalizado processo de Carregamento dos Tempos. "
           f"- Tempo de transformação: {r} segundos")
     
-def CarregarDmTitulo():
-    print("Iniciando processa de Carregamento dos Títulos")
+def CarregarDmTitulo(tit):
+    print("Iniciando processo de Carregamento dos Títulos")
     start = timeit.default_timer()
-    tit = TransformarTitutlo()
+    tit 
         
     for item in tit :
         ins = dm_titulo.insert().values(id_titulo = item.id_titulo,tpo_titulo = item.tpo_titulo,cla_titulo = item.cla_titulo, dsc_titulo = item.dsc_titulo)
@@ -600,13 +579,13 @@ def CarregarDmTitulo():
     print("Finalizado processo de Carregamento dos Títulos. "
           f"- Tempo de transformação: {r} segundos")
     
-def CarregarFTlocacoes():
-    print("Iniciando processa de Carregamento das Locações na tabela de fatos")
+def CarregarFTlocacoes(locF):
+    print("Iniciando processo de Carregamento das Locações na tabela de fatos")
     start = timeit.default_timer()
-    locF = TransformarFMLocacoes()
+    locF 
         
     for item in locF :
-        ins = ft_locacoes.insert().values(id_socio = item.id_socio,id_titulo = item.id_titulo,id_art = item.id_art,id_grav = item.id_grav,id_tempo = item.id_tempo,valor_arrecadado = item.valor_arrecadado,tempo_devolucao = item.tempo_devolucao,multa_atraso = item.multa_atraso)
+        ins = ft_locacoes.insert().values(id_soc = item.id_soc,id_titulo = item.id_titulo,id_art = item.id_art,id_grav = item.id_grav,id_tempo = item.id_tempo,valor_arrecadado = item.valor_arrecadado,tempo_devolucao = item.tempo_devolucao,multa_atraso = item.multa_atraso)
         result = engine.execute(ins)
         
         
@@ -618,16 +597,29 @@ def CarregarFTlocacoes():
 def ETL():
     print("Iniciando rotina ETL")
     start = timeit.default_timer()
-    #CarregarDmArtistas()
-    #CarregarDmGravadora()
-    #CarregarDmSocio()
-    #CarregarDmTempo()
-    #CarregarDmTitulo()
-    CarregarFTlocacoes()
+    artista = ExtractArtista()
+    arts = TransformarArtistas(artista)
+    gravadora = ExtrairGravadoras()
+    gravs = TransformarGravadoras(gravadora)
+    socio = ExtrairSocios()
+    soc  = TransformarSocio(socio)
+    tempo = ExtrairTempo()
+    temp = TransformarTempo(tempo)
+    titulo = ExtrairTitulos()
+    tit = TransformarTitutlo(titulo)
+    loc = ExtrairLocacoes()
+    itensLocacoes = ExtrairItensLocacoes()
+    FTLocacoes = TransformarFMLocacoes(loc,itensLocacoes,titulo)
+    CarregarDmArtistas(arts)
+    CarregarDmGravadora(gravs)
+    CarregarDmSocio(soc)
+    CarregarDmTempo(temp)
+    CarregarDmTitulo(tit)
+    CarregarFTlocacoes(FTLocacoes)
     end = timeit.default_timer()
     r = (end - start)
     print("Finalizado a rotina ETL. "
-          f"- Tempo de transformação: {r} segundos")
+          f"- Tempo de processamente: {r} segundos")
     
 
 def __main__():

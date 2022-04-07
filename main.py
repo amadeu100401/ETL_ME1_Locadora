@@ -585,7 +585,7 @@ def CarregarFTlocacoes(locF):
     locF 
         
     for item in locF :
-        ins = ft_locacoes.insert().values(id_soc = item.id_soc,id_titulo = item.id_titulo,id_art = item.id_art,id_grav = item.id_grav,id_tempo = item.id_tempo,valor_arrecadado = item.valor_arrecadado,tempo_devolucao = item.tempo_devolucao,multa_atraso = item.multa_atraso)
+        ins = ft_locacoes.insert().values(id_soc = item.id_socio,id_titulo = item.id_titulo,id_art = item.id_art,id_grav = item.id_grav,id_tempo = item.id_tempo,valor_arrecadado = item.valor_arrecadado,tempo_devolucao = item.tempo_devolucao,multa_atraso = item.multa_atraso)
         result = engine.execute(ins)
         
         
